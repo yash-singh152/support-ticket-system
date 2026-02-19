@@ -41,31 +41,37 @@ Built with:
     - **Backend API**: [http://localhost:8000/api/tickets/](http://localhost:8000/api/tickets/)
     - **Admin Panel**: [http://localhost:8000/admin/](http://localhost:8000/admin/) (Create a superuser via `docker-compose exec backend python manage.py createsuperuser` if needed).
 
+## LLM Selection & Rationale
+
+### Model: OpenAI GPT-3.5-turbo
+
+I chose **GPT-3.5-turbo** for the following reasons:
+1.  **Cost-Effectiveness**: It is significantly cheaper than GPT-4 while providing sufficient intelligence for text classification tasks.
+2.  **Speed**: Low latency ensures the user experience remains snappy when tickets are auto-classified.
+3.  **Instruction Following**: It adheres well to the strict JSON output format required by the backend, reducing parsing errors.
+4.  **Availability**: High availability and rate limits suitable for a demonstration application.
+
 ## Design Decisions
 
-### 1. Architecture: Microservices-lite
-The application is split into two distinct services (Frontend and Backend) orchestrated by Docker Compose. This ensures separation of concerns and allows each part to scale independently.
-- **Backend** acts as a pure REST API.
-- **Frontend** is a Single Page Application (SPA).
-- **Nginx** (optional for prod, currently using Vite dev server for assessment speed) serves the frontend.
+### 1. Architecture: Containerized Microservices
+The application is split into two distinct services (Frontend and Backend) orchestrated by Docker Compose. This ensures:
+-   **Separation of Concerns**: The backend API is decoupled from the UI.
+-   **Scalability**: Components can be scaled independently.
+-   **Reproducibility**: `docker-compose up` guarantees the environment is identical across different machines.
 
-### 2. LLM Integration
-- **Model**: OpenAI GPT-3.5-turbo (efficient and cost-effective).
-- **Fail-safe**: If the LLM call fails (network issue, invalid key), the system gracefully degrades. The user can still select categories manually.
-- **Privacy**: Only the description is sent to the LLM.
+### 2. Database Integrity
+-   **PostgreSQL**: Chosen over SQLite for production-readiness.
+-   **Constraints**: Data integrity (e.g., valid categories/priorities) is enforced at the database level, not just the frontend.
 
-### 3. Database & Optimization
-- **Enforced Constraints**: Data integrity is enforced at the database level (PostgreSQL) using proper field types and constraints.
-- **Efficient Querying**: The stats endpoint uses Django's `aggregate` and `annotate` to perform calculations in the database, avoiding slow Python loops.
+### 3. Fail-Safe AI Integration
+-   **Graceful Degradation**: If the OpenAI API is down or the key is missing, the system catches the error and allows the user to manually select categories without crashing.
+-   **Privacy**: Only the ticket description is sent to the LLM; no other user data is exposed.
 
-### 4. UI/UX
-- **Clean Interface**: A modern, clean interface focusing on readability and ease of use.
-- **Real-time Feedback**: Loading states indicate when the AI is processing.
-- **Optimistic Updates**: (Where applicable) UI updates immediately for better perceived performance.
+## Tech Stack
 
-## Tech Stack Details
+-   **Backend**: Django 5.0, Django REST Framework
+-   **Frontend**: React 18, Vite
+-   **Database**: PostgreSQL 15
+-   **Containerization**: Docker, Docker Compose
 
-- **Django 5.0**: Latest version for security and features.
-- **React 18 + Vite**: Fast build tool and modern React features.
-- **PostgreSQL 16**: Robust relational database.
 
