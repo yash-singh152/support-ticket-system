@@ -1,0 +1,28 @@
+# General
+__pycache__/
+*.py[cod]
+.env
+.venv/
+venv/
+env/
+*.log
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# VS Code
+.vscode/
+
+# Docker
+.docker/
+
+# React / Node
+node_modules/
+dist/
+.DS_Store
+
+# Django
+db.sqlite3
+media/
+static/
