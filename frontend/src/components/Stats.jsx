@@ -17,7 +17,7 @@ const Stats = ({ refreshTrigger }) => {
         fetchStats();
     }, [refreshTrigger]);
 
-    if (!stats) return <div className="card">Loading stats...</div>;
+    if (!stats) return null;
 
     return (
         <div className="card">
