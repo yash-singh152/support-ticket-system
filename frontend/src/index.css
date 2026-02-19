@@ -76,12 +76,19 @@ textarea:focus {
   font-size: 0.875rem;
 }
 
+
 .card {
   background: var(--card-bg);
   padding: 1.5rem;
   border-radius: var(--radius);
   box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   margin-bottom: 1.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .badge {
