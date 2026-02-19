@@ -128,15 +128,7 @@ const TicketList = ({ refreshTrigger }) => {
                                     </select>
                                     <button
                                         onClick={() => handleDelete(ticket.id)}
-                                        style={{
-                                            marginLeft: '1rem',
-                                            backgroundColor: '#ff4d4f',
-                                            color: 'white',
-                                            border: 'none',
-                                            padding: '0.25rem 0.5rem',
-                                            borderRadius: '4px',
-                                            cursor: 'pointer'
-                                        }}
+                                        className="btn-delete"
                                     >
                                         Delete
                                     </button>
