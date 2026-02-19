@@ -1,0 +1,12 @@
+
+.git
+.gitignore
+.env
+backend_logs.txt
+node_modules
+__pycache__
+*.pyc
+venv
+.venv
+dist
+coverage
