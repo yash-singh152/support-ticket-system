@@ -99,7 +99,13 @@ const TicketList = ({ refreshTrigger }) => {
                 <p>Loading tickets...</p>
             ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    {tickets.length === 0 && <p>No tickets found.</p>}
+                    {tickets.length === 0 && (
+                        <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--text-secondary)' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>📭</div>
+                            <p style={{ margin: 0, fontWeight: '500' }}>No tickets found</p>
+                            <p style={{ margin: '0.25rem 0 0', fontSize: '0.875rem' }}>Try adjusting your filters or create a new ticket.</p>
+                        </div>
+                    )}
                     {tickets.map(ticket => (
                         <div key={ticket.id} style={{ border: '1px solid var(--border-color)', borderRadius: 'var(--radius)', padding: '1rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
